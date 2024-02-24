@@ -43,15 +43,15 @@
     "sourcelib": {
       "flake": false,
       "locked": {
-        "lastModified": 1708570700,
-        "narHash": "sha256-CHIiLAK6Lm8AVKO838tJLZZ0PM2bLqmXCReEqb+/b1M=",
-        "owner": "uqembeddedsys",
+        "lastModified": 1708756408,
+        "narHash": "sha256-61cskUNfbMh+QD7HpXo4LGXrqt+DB/EXw+JqtJkG4TY=",
+        "owner": "mcarthur-alford",
         "repo": "sourcelib",
-        "rev": "e056a66eb62ac09f13e1646630924c46b63f568b",
+        "rev": "fdcf288c62594496c49b01c991cd8eb579468a37",
         "type": "github"
       },
       "original": {
-        "owner": "uqembeddedsys",
+        "owner": "mcarthur-alford",
         "repo": "sourcelib",
         "type": "github"
       }

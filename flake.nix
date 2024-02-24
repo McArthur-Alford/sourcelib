@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     sourcelib = {
-      url = "github:uqembeddedsys/sourcelib";
+      url = "github:mcarthur-alford/sourcelib";
       flake = false;
     };
   };
@@ -39,6 +39,7 @@
 
           shellHook = ''
               export SOURCELIB_ROOT="${sourcelib}"
+              export PATH="$SOURCELIB_ROOT/tools:$SOURCELIB_ROOT/components/boards/nucleo-f429zi/Inc:$PATH"
               echo "SOURCELIB_ROOT set to $\{SOURCELIB_ROOT}"
               echo "Dont forget to run 'sudo usermod -aG dialout $USER', the flake cant do this for you."
           '';
