@@ -1,19 +1,18 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils,  ... } @ inputs:
+  outputs = { nixpkgs, flake-utils, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          config.segger-jlink.acceptLicense = true; # Make sure you accept this
+          config.segger-jlink.acceptLicense = true; # Make sure you actually accept this
         };
 
-        customJLink = pkgs.segger-jlink.overrideAttrs (oldAttrs: rec {
+        customJLink = pkgs.segger-jlink.overrideAttrs (_oldAttrs: rec {
           version = "V794j"; # TODO this doesnt actually work, but does it matter really??? Only time will tell.
         });
 
@@ -27,17 +26,18 @@
         sourceLib = pkgs.symlinkJoin {
           name = "sourcelib";
           paths = [
-            (sourceLibRepo)
+            sourceLibRepo
             (sourceLibRepo + "/tools")
             (sourceLibRepo + "/components/boards/nucleo-f429zi/Inc")
           ];
         };
-      in {
+      in
+      {
         # package this repo so we can use it as a dependency in the devshell
         package.sourceLib = sourceLib;
 
         # Devshell to allow easy building of everything
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             sourceLib
             gcc-arm-embedded-12
@@ -54,7 +54,7 @@
           ];
 
           shellHook = ''
-            export PATH="${sourceLib}/tools:${sourceLib}/components/boards/nucleo-f429zi/Inc:$PATH"
+            # export PATH="${sourceLib}/tools:${sourceLib}/components/boards/nucleo-f429zi/Inc:$PATH"
           
               echo "Dont forget to run 'sudo usermod -aG dialout $USER', the flake cant do this for you."
           '';
