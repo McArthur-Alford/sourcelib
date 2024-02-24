@@ -17,3 +17,6 @@ build
 # Previous svn files
 *.svn
 *._*
+.envrc
+.direnv
+flake.lock
