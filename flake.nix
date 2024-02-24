@@ -17,23 +17,25 @@
           version = "V794j"; # TODO this doesnt actually work, but does it matter really??? Only time will tell.
         });
 
-        sourceLib = pkgs.fetchFromGitHub {
+        sourceLibRepo = pkgs.fetchFromGitHub {
           owner = "mcarthur-alford";
           repo = "sourcelib";
           rev = "main";
           sha256 = "sha256-neykOieVzFds0HrRXelDDLEYrO1S6+FQQk3SOjCqeRQ=";
         };
-      in {
-        # package this repo so we can use it as a dependency in the devshell
-        package.sourcelib = pkgs.symlinkJoin {
+
+        sourceLib = pkgs.symlinkJoin {
           name = "sourcelib";
           paths = [
-            (sourceLib)
-            (sourceLib + "/tools")
-            (sourceLib + "/components/boards/nucleo-f429zi/Inc")
+            (sourceLibRepo)
+            (sourceLibRepo + "/tools")
+            (sourceLibRepo + "/components/boards/nucleo-f429zi/Inc")
           ];
         };
-      
+      in {
+        # package this repo so we can use it as a dependency in the devshell
+        package.sourceLib = sourceLib;
+
         # Devshell to allow easy building of everything
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
