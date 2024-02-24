@@ -1,9 +1,13 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    sourcelib = {
+      url = "github:uqembeddedsys/sourcelib";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, flake-utils, ... }:
+  outputs = { nixpkgs, flake-utils, sourcelib, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -15,17 +19,11 @@
         customJLink = pkgs.segger-jlink.overrideAttrs (_oldAttrs: rec {
           version = "V794j"; # TODO this doesnt actually work, but does it matter really??? Only time will tell.
         });
-
-        sourceLib = import ./derivation.nix { inherit pkgs; };
       in
       {
-        # package this repo so we can use it as a dependency in the devshell
-        package.sourceLib = sourceLib;
-
         # Devshell to allow easy building of everything
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
-            sourceLib
             gcc-arm-embedded-12
             glibc_multi.dev
             gdb
@@ -40,8 +38,8 @@
           ];
 
           shellHook = ''
-            # export PATH="${sourceLib}/tools:${sourceLib}/components/boards/nucleo-f429zi/Inc:$PATH"
-          
+              export SOURCELIB_ROOT="${sourcelib}"
+              echo "SOURCELIB_ROOT set to $\{SOURCELIB_ROOT}"
               echo "Dont forget to run 'sudo usermod -aG dialout $USER', the flake cant do this for you."
           '';
         };

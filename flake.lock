@@ -36,7 +36,24 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "sourcelib": "sourcelib"
+      }
+    },
+    "sourcelib": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1708570700,
+        "narHash": "sha256-CHIiLAK6Lm8AVKO838tJLZZ0PM2bLqmXCReEqb+/b1M=",
+        "owner": "uqembeddedsys",
+        "repo": "sourcelib",
+        "rev": "e056a66eb62ac09f13e1646630924c46b63f568b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "uqembeddedsys",
+        "repo": "sourcelib",
+        "type": "github"
       }
     },
     "systems": {
