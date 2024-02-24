@@ -16,21 +16,7 @@
           version = "V794j"; # TODO this doesnt actually work, but does it matter really??? Only time will tell.
         });
 
-        sourceLibRepo = pkgs.fetchFromGitHub {
-          owner = "mcarthur-alford";
-          repo = "sourcelib";
-          rev = "main";
-          sha256 = "sha256-neykOieVzFds0HrRXelDDLEYrO1S6+FQQk3SOjCqeRQ=";
-        };
-
-        sourceLib = pkgs.symlinkJoin {
-          name = "sourcelib";
-          paths = [
-            sourceLibRepo
-            (sourceLibRepo + "/tools")
-            (sourceLibRepo + "/components/boards/nucleo-f429zi/Inc")
-          ];
-        };
+        sourceLib = import ./derivation.nix { inherit pkgs; };
       in
       {
         # package this repo so we can use it as a dependency in the devshell
