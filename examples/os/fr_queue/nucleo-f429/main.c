@@ -51,7 +51,7 @@ int main( void ) {
 	//
 
 	// Start sender and receiver tasks
-    xTaskCreate( (void *) &senderTask, (const signed char *) "SEND", SENDERTASK_STACK_SIZE, NULL, SENDERTASK_PRIORITY, NULL );
+  xTaskCreate( (void *) &senderTask, (const signed char *) "SEND", SENDERTASK_STACK_SIZE, NULL, SENDERTASK_PRIORITY, NULL );
 	xTaskCreate( (void *) &receiverTask, (const signed char *) "RECV", RECEIVERTASK_STACK_SIZE, NULL, RECEIVERTASK_PRIORITY, NULL );
 
 	/* Start the scheduler.
@@ -150,7 +150,7 @@ void receiverTask( void ) {
 				if (RecvMessage.off) {
 					BRD_LEDGreenOff();
 				}
-        	}
+    	}
 		}
 
 		// Delay for 10ms
